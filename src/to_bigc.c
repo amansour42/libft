@@ -1,41 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strjoin.c                                       :+:      :+:    :+:   */
+/*   to_bigc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: amansour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/04/17 12:18:23 by amansour          #+#    #+#             */
-/*   Updated: 2017/05/03 10:10:48 by amansour         ###   ########.fr       */
+/*   Created: 2017/10/04 15:05:32 by amansour          #+#    #+#             */
+/*   Updated: 2019/08/19 15:24:22 by amansour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "ft_printf.h"
 
-char	*ft_strjoin(char const *s1, char const *s2)
+char	*to_bigc(va_list *ap)
 {
-	char	*str;
-	size_t	i;
-	size_t	j;
+	wchar_t	a;
+	int		len;
+	char	*s;
 
-	if (!s1 || !s2)
+	a = (wchar_t)va_arg(*ap, wint_t);
+	if (!(len = wchar_len(a)))
 		return (NULL);
-	str = ft_strnew(ft_strlen(s1) + ft_strlen(s2));
-	if (str)
-	{
-		i = 0;
-		j = 0;
-		while (s1[i])
-		{
-			str[i] = s1[i];
-			i++;
-		}
-		while (s2[j])
-		{
-			str[i + j] = s2[j];
-			j++;
-		}
-		str[i + j] = '\0';
-	}
-	return (str);
+	if (!(s = (char*)malloc(len + 1)))
+		return (NULL);
+	len = 0;
+	convert_unicode(a, &s, &len);
+	s[len] = '\0';
+	return (s);
 }

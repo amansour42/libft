@@ -6,7 +6,7 @@
 /*   By: amansour <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/04/21 12:42:37 by amansour          #+#    #+#             */
-/*   Updated: 2017/05/03 14:06:30 by amansour         ###   ########.fr       */
+/*   Updated: 2019/08/19 14:25:29 by amansour         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,17 @@
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <fcntl.h>
+# include "ft_printf.h"
+
+# define BUFF_SIZE 200
+
+typedef struct		s_r
+{
+	int				fd;
+	char			*s;
+	struct s_r		*nxt;
+}					t_r;
 
 typedef	struct		s_list
 {
@@ -89,5 +100,5 @@ char				*ft_strcat(char *s1, char const *s2);
 char				*ft_strncat(char *s, char const *s2, size_t n);
 t_list				*ft_lstnew(void const *content, size_t content_size);
 t_list				*ft_lstmap(t_list *lst, t_list *(*f)(t_list *element));
-
+int					get_next_line(const int fd, char **line);
 #endif
